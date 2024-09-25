@@ -24,9 +24,9 @@ def favicon():
   return redirect("https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png")
 
 @app.route("/robots.txt")
-def favicon():
+def robots():
   return send_from_directory('static', 'robots.txt')
-  
+
 @app.route("/sitemap.xml")
 def sitemap():
     return send_from_directory('static', 'sitemap.xml')
