@@ -8,7 +8,9 @@ app = Flask(__name__)
 # Credenciales de la aplicación de Spotify
 client_id = "84a3895b12b5431da7c325c75d7cebbe"
 client_secret = "a8b23dea66b94b9a93d24e410807b3cf"
-redirect_uri = "https://recobeat.nysr.host/callback" 
+redirect_uri = "https://recobeat.nysr.host/callback"
+
+print('started ' + client_id + ' ID ' + client_secret + ' client secret ' )
 
 # Configura la autorización de Spotify
 scopes = "user-read-private user-read-email playlist-read-private playlist-modify-public user-library-modify"
