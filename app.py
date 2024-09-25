@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, send_from_directory
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import re
@@ -22,6 +22,14 @@ sp_oauth = SpotifyOAuth(
 @app.route("/favicon.ico")
 def favicon():
   return redirect("https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png")
+
+@app.route("/robots.txt")
+def favicon():
+  return send_from_directory('static', 'robots.txt')
+  
+@app.route("/sitemap.xml")
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
 
 # Define la ruta para el inicio de sesión
 @app.route("/")
