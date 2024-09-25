@@ -1,3 +1,4 @@
+<!-- recomendaciones.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +46,21 @@
             height: 40px;
         }
 
+        /* Estilo del botón "Reload" */
+        .reload-button {
+            position: absolute;
+            top: 60px;
+            right: 35px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .reload-button img {
+            width: 40px;
+            height: 40px;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
@@ -82,15 +98,30 @@
         footer {
             margin-top: -10px;
         }
+
+        /* Estilo para el ícono de negación */
+        .deny-icon {
+            width: 40px;
+            height: 40px;
+        }
+        .deny-icon {
+            background-color: transparent;
+            border: none;
+            cursor: not-allowed;
+        }
     </style>
+    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png">
 </head>
 <body>
     <div class="container">
         <!-- Botón "Atrás" -->
-        <button class="back-button" onclick="history.back()">
+        <button class="back-button" onclick=location='..'>
             <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fbasic-ui-elements-round-blod%2F186268%2F18-512.png&f=1&nofb=1&ipt=32da23d170cc44c28310412dcd79e602187196ede6994582ee42da651219972b&ipo=images" alt="Atrás">
         </button>
-
+        <!-- Botón "Reload" -->
+        <button class="reload-button" onclick="window.location.reload()">
+            <img src="https://www.jbmarketresearch.com.au/images/reload-white.png" alt="reload">
+        </button>
         <header>
             <h1>RecoBeat</h1>
         </header>
@@ -100,9 +131,13 @@
                 <ul>
                     {% for track in recomendaciones %}
                     <li>
-                        <button class="play-button" data-preview-url="{{ track.preview_url }}" data-playing="false">
-                            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images" alt="Play">
-                        </button>
+                        {% if track.preview_url %}
+                            <button class="play-button" data-preview-url="{{ track.preview_url }}" data-playing="false">
+                                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images" alt="Play">
+                            </button>
+                        {% else %}
+                            <img class="deny-icon" src="https://icon-library.com/images/deny-icon/deny-icon-19.jpg" alt="No disponible">
+                        {% endif %}
                         <div class="track-info">
                             <h3>{{ track.name }}</h3>
                             <p><b>De:</b> {{ track.artists[0].name }}</p>
@@ -117,7 +152,6 @@
         </main>
         <footer>
             <p>© 2024 Zeoz</p>
-            <p>(Si no se reproduce, es un bug de Spotify)</p>
         </footer>
     </div>
 
@@ -159,7 +193,7 @@
             button.addEventListener('click', () => {
                 const previewUrl = button.dataset.previewUrl;
 
-                // Si no hay preview_url, no hacer nada
+                // Si no hay preview_url, mostrar el ícono de negación y salir
                 if (!previewUrl) {
                     alert('Esta canción no tiene una vista previa disponible.');
                     return;
@@ -184,9 +218,17 @@
                     currentAudio = new Audio(previewUrl);
                     currentAudio.play();
                     button.dataset.playing = 'true';
-                    button.querySelector('img').src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpluspng.com%2Fimg-png%2Fpause-button-png-pause-button-transparent-google-search-512.png&f=1&nofb=1&ipt=c5cf81a01fd8bf61eb172a50cffe91440bf1fad1dbe2fdb54e2e4d1040dead91&ipo=images';
-                    currentButton = button;
+                    button.querySelector('img').src = 'https://pluspng.com/img-png/pause-button-png-pause-button-transparent-google-search-512.png';
                 }
+
+                // Actualiza el botón actual
+                currentButton = button;
+
+                // Maneja el final de la reproducción
+                currentAudio.addEventListener('ended', () => {
+                    button.dataset.playing = 'false';
+                    button.querySelector('img').src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images';
+                });
             });
         });
     </script>

@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Credenciales de la aplicación de Spotify
 client_id = "84a3895b12b5431da7c325c75d7cebbe"
 client_secret = "09be01d08b7c4952bf539ff356f7d48f"
-redirect_uri = "https://song.nysr.host/callback" 
+redirect_uri = "http://localhost:8080/callback" 
 
 # Configura la autorización de Spotify
 scopes = "user-read-private user-read-email playlist-read-private playlist-modify-public user-library-modify"
@@ -18,6 +18,10 @@ sp_oauth = SpotifyOAuth(
     redirect_uri=redirect_uri,
     scope=scopes
 )
+
+@app.route("/favicon.ico")
+def favicon():
+  return redirect("https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png")
 
 # Define la ruta para el inicio de sesión
 @app.route("/")
