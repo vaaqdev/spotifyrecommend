@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Credenciales de la aplicación de Spotify
 client_id = "6fb438f4fb194723a12a41c90cdcf26b"
 client_secret = "a12ed5e42e3240cbae7a400d64c280b6"
-redirect_uri = "http://recobeat.nysr.host/callback"
+redirect_uri = "https://recobeat.nysr.host/callback"
 
 print('started ' + client_id + ' ID ' + client_secret + ' client secret ' )
 
