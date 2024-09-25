@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, send_from_directory
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from spotipy.exceptions import SpotifyException
 import re
 
 app = Flask(__name__)
@@ -9,7 +8,7 @@ app = Flask(__name__)
 # Credenciales de la aplicación de Spotify
 client_id = "84a3895b12b5431da7c325c75d7cebbe"
 client_secret = "09be01d08b7c4952bf539ff356f7d48f"
-redirect_uri = "https://recobeat.nysr.host/callback"
+redirect_uri = "https://recobeat.nysr.host/callback" 
 
 # Configura la autorización de Spotify
 scopes = "user-read-private user-read-email playlist-read-private playlist-modify-public user-library-modify"
@@ -22,11 +21,11 @@ sp_oauth = SpotifyOAuth(
 
 @app.route("/favicon.ico")
 def favicon():
-    return redirect("https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png")
+  return redirect("https://res.cloudinary.com/https-296fps-cf/image/upload/v1727255538/m9odssnobuyxzxknqnit.png")
 
 @app.route("/robots.txt")
 def robots():
-    return send_from_directory('static', 'robots.txt')
+  return send_from_directory('static', 'robots.txt')
 
 @app.route("/sitemap.xml")
 def sitemap():
@@ -56,55 +55,46 @@ def recomendaciones():
     # Obtén el token de acceso del usuario
     token = session.get("spotify_token")
     if token:
-        try:
-            sp = spotipy.Spotify(auth=token)
-            spotify_link = request.form.get("spotify_link")
-            if spotify_link:
-                # Extrae el ID de la canción del enlace de Spotify
-                match = re.search(r'track/([a-zA-Z0-9]+)', spotify_link)
-                if match:
-                    track_id = match.group(1)
-                    recomendaciones = sp.recommendations(seed_tracks=[track_id], limit=5)
-                    recommendations_list = recomendaciones["tracks"]
-                    return render_template("recomendaciones.html", recomendaciones=recommendations_list)
-                else:
-                    return "Enlace de Spotify inválido"
+        sp = spotipy.Spotify(auth=token)
+        spotify_link = request.form.get("spotify_link")
+        if spotify_link:
+            # Extrae el ID de la canción del enlace de Spotify
+            match = re.search(r'track/([a-zA-Z0-9]+)', spotify_link)
+            if match:
+                track_id = match.group(1)
+                recomendaciones = sp.recommendations(seed_tracks=[track_id], limit=5)
+                recommendations_list = recomendaciones["tracks"]
+                print("Recomendaciones:", recommendations_list)  # Imprime la lista en la consola
+                return render_template("recomendaciones.html", recomendaciones=recommendations_list)
             else:
-                return "Falta enlace de Spotify"
-        except SpotifyException:
-            # Si hay un error con el token, forzar a iniciar sesión nuevamente
-            session.pop("spotify_token", None)  # Elimina el token de la sesión
-            return redirect(url_for("index"))
+                return "Enlace de Spotify inválido"
+        else:
+            return "Falta enlace de Spotify"
     else:
-        return redirect("..")
+        return "Debes iniciar sesión"
 
 # Función para guardar/eliminar "Me gusta"
 @app.route('/like', methods=['POST'])
 def like_track():
     token = session.get("spotify_token")
     if token:
-        try:
-            sp = spotipy.Spotify(auth=token)
-            track_id = request.form.get("track_id")
-            is_liked = request.form.get("liked") == 'true'
+        sp = spotipy.Spotify(auth=token)
+        track_id = request.form.get("track_id")
+        is_liked = request.form.get("liked") == 'true'
 
-            if is_liked:
-                # Eliminar de "Me gusta"
-                sp.current_user_saved_tracks_delete(tracks=[track_id])
-                return "Eliminado de 'Me gusta'"
-            else:
-                # Guardar en "Me gusta"
-                sp.current_user_saved_tracks_add(tracks=[track_id])
-                return "Agregado a 'Me gusta'"
-        except SpotifyException:
-            # Si hay un error con el token, forzar a iniciar sesión nuevamente
-            session.pop("spotify_token", None)  # Elimina el token de la sesión
-            return redirect(url_for("index"))
+        if is_liked:
+            # Eliminar de "Me gusta"
+            sp.current_user_saved_tracks_delete(tracks=[track_id])
+            return "Eliminado de 'Me gusta'"
+        else:
+            # Guardar en "Me gusta"
+            sp.current_user_saved_tracks_add(tracks=[track_id])
+            return "Agregado a 'Me gusta'"
     else:
-        return redirect("..")
+        return "Debes iniciar sesión"
 
 # Configura la aplicación para que use sesiones
 app.secret_key = "secr3t_kRE5KTYM2MedOGdo"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0',port=8080, debug=True)
