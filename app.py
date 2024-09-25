@@ -6,9 +6,9 @@ import re
 app = Flask(__name__)
 
 # Credenciales de la aplicación de Spotify
-client_id = "84a3895b12b5431da7c325c75d7cebbe"
-client_secret = "a8b23dea66b94b9a93d24e410807b3cf"
-redirect_uri = "https://recobeat.nysr.host/callback"
+client_id = "6fb438f4fb194723a12a41c90cdcf26b"
+client_secret = "a12ed5e42e3240cbae7a400d64c280b6"
+redirect_uri = "http://recobeat.nysr.host/callback"
 
 print('started ' + client_id + ' ID ' + client_secret + ' client secret ' )
 
@@ -96,7 +96,7 @@ def like_track():
         return "Debes iniciar sesión"
 
 # Configura la aplicación para que use sesiones
-app.secret_key = "secr3t_kRE5KTYM2MedOGdo"
+app.secret_key = "secretkeylol"
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=8080, debug=True)
