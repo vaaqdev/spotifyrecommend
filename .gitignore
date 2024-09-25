@@ -3,3 +3,4 @@ package.json
 package-lock.json
 test1.js
 index.js
+.cache
