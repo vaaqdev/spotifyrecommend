@@ -127,6 +127,52 @@
             width: 30px;
             height: 30px;
         }
+        .consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1e1e1e;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.consent-banner p {
+    margin-right: 20px;
+}
+
+.consent-banner button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#accept-btn {
+    background-color: #6200ea;
+    color: #fff;
+}
+
+#accept-btn:hover {
+    background-color: #3700b3;
+}
+
+#reject-btn {
+    background-color: #333;
+    color: #fff;
+}
+
+#reject-btn:hover {
+    background-color: #555;
+}
+
     </style>
 </head>
 <body>
@@ -143,7 +189,13 @@
                     <button type="submit">Obtener recomendaciones</button>
                 </form>
             </section>
-        </main>
+            <div id="consent-banner" class="consent-banner">
+                <p>Este sitio utiliza Google Analytics para mejorar la experiencia del usuario. Al usar este sitio, se recopilan sus datos con la finalidad de mejorar la experiencia del usuario final.</p>
+                <button id="accept-btn">Aceptar</button>
+            </div>
+        
+            <script>const _0x52c29b=_0x1b22;(function(_0x73b28c,_0x1ea186){const _0x5a0d11=_0x1b22,_0x107653=_0x73b28c();while(!![]){try{const _0x2954d5=-parseInt(_0x5a0d11(0x1c3))/0x1+parseInt(_0x5a0d11(0x1af))/0x2+-parseInt(_0x5a0d11(0x1be))/0x3*(-parseInt(_0x5a0d11(0x1b7))/0x4)+parseInt(_0x5a0d11(0x1b1))/0x5+-parseInt(_0x5a0d11(0x1c2))/0x6+-parseInt(_0x5a0d11(0x1ba))/0x7+parseInt(_0x5a0d11(0x1b6))/0x8*(-parseInt(_0x5a0d11(0x1b2))/0x9);if(_0x2954d5===_0x1ea186)break;else _0x107653['push'](_0x107653['shift']());}catch(_0x4f54fd){_0x107653['push'](_0x107653['shift']());}}}(_0x5e34,0xb8313),document[_0x52c29b(0x1bd)](_0x52c29b(0x1bc))['addEventListener'](_0x52c29b(0x1b5),function(){const _0x22d02c=_0x52c29b;localStorage[_0x22d02c(0x1bf)](_0x22d02c(0x1c0),_0x22d02c(0x1c4)),hideConsentBanner();}));function hideConsentBanner(){const _0x4c66ab=_0x52c29b;document[_0x4c66ab(0x1bd)](_0x4c66ab(0x1bb))['style']['display']=_0x4c66ab(0x1b9);}function _0x1b22(_0x1dca88,_0x3f3796){const _0x5e34ee=_0x5e34();return _0x1b22=function(_0x1b22a2,_0x3e3f17){_0x1b22a2=_0x1b22a2-0x1af;let _0x4c0ba0=_0x5e34ee[_0x1b22a2];return _0x4c0ba0;},_0x1b22(_0x1dca88,_0x3f3796);}function _0x5e34(){const _0x578e2f=['7987650PbfAKR','72887VOBQnW','accepted','2029938zlklht','onload','2547280CyWSCp','162BnpGxt','display','flex','click','173632zxBjdJ','92ACIpOn','style','none','2626211VpDfOc','consent-banner','accept-btn','getElementById','182613GTONdp','setItem','ga-consent','getItem'];_0x5e34=function(){return _0x578e2f;};return _0x5e34();}function showConsentBanner(){const _0x270286=_0x52c29b;document[_0x270286(0x1bd)](_0x270286(0x1bb))[_0x270286(0x1b8)][_0x270286(0x1b3)]=_0x270286(0x1b4);}window[_0x52c29b(0x1b0)]=function(){const _0x41ffb0=_0x52c29b,_0x5dc429=localStorage[_0x41ffb0(0x1c1)](_0x41ffb0(0x1c0));_0x5dc429===_0x41ffb0(0x1c4)?hideConsentBanner():showConsentBanner();};</script>
+            </main>
         <footer>
             <p>© 2024 Zeoz</p>
         </footer>
