@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones de canciones para Spotify</title>
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #191414; /* Gris oscuro */
+            color: #fff; /* Blanco */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Cuadro centrado */
+        .container {
+            background-color: #181818; /* Gris muy oscuro */
+            padding: 40px;
+            border-radius: 50px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative; /* Para posicionar el botón de "Atrás" */
+        }
+
+        /* Estilo del botón "Atrás" */
+        .back-button {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button img {
+            width: 40px;
+            height: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .track-info {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        /* Estilos para los botones */
+        .play-button, .like-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .play-button img, .like-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .like-button img.liked {
+            filter: brightness(0) saturate(100%) invert(42%) sepia(59%) saturate(2606%) hue-rotate(114deg) brightness(99%) contrast(101%);
+        }
+
+        footer {
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botón "Atrás" -->
+        <button class="back-button" onclick="history.back()">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn4.iconfinder.com%2Fdata%2Ficons%2Fbasic-ui-elements-round-blod%2F186268%2F18-512.png&f=1&nofb=1&ipt=32da23d170cc44c28310412dcd79e602187196ede6994582ee42da651219972b&ipo=images" alt="Atrás">
+        </button>
+
+        <header>
+            <h1>Recomendaciones de canciones para Spotify</h1>
+        </header>
+        <main>
+            <section class="recomendaciones">
+                <h2>Recomendaciones</h2>
+                <ul>
+                    {% for track in recomendaciones %}
+                    <li>
+                        <button class="play-button" data-preview-url="{{ track.preview_url }}" data-playing="false">
+                            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images" alt="Play">
+                        </button>
+                        <div class="track-info">
+                            <h3>{{ track.name }}</h3>
+                            <p><b>De:</b> {{ track.artists[0].name }}</p>
+                        </div>
+                        <button class="like-button" data-track-id="{{ track.id }}" data-liked="{{ track.is_liked }}">
+                            <img src="https://cdn1.iconfinder.com/data/icons/ui-basic-14/24/circle_small-plus-512.png" alt="Like" class="{{ 'liked' if track.is_liked else '' }}">
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 Zeoz</p>
+            <p>(Si no se reproduce, es un bug de Spotify)</p>
+        </footer>
+    </div>
+
+    <script>
+        // Manejo del botón "Me gusta"
+        const likeButtons = document.querySelectorAll('.like-button');
+
+        likeButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const trackId = button.dataset.trackId;
+                const isLiked = button.dataset.liked === 'true';
+
+                // Llamada a la API para guardar/eliminar "Me gusta" en Spotify
+                const response = await fetch('/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `track_id=${trackId}&liked=${isLiked}`
+                });
+
+                // Actualiza el estado del botón
+                if (isLiked) {
+                    button.dataset.liked = 'false';
+                    button.querySelector('img').classList.remove('liked');
+                } else {
+                    button.dataset.liked = 'true';
+                    button.querySelector('img').classList.add('liked');
+                }
+            });
+        });
+
+        // Manejo del botón "Play/Pause"
+        const playButtons = document.querySelectorAll('.play-button');
+        let currentAudio = null;
+        let currentButton = null;
+
+        playButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const previewUrl = button.dataset.previewUrl;
+
+                // Si no hay preview_url, no hacer nada
+                if (!previewUrl) {
+                    alert('Esta canción no tiene una vista previa disponible.');
+                    return;
+                }
+
+                const isPlaying = button.dataset.playing === 'true';
+
+                // Si ya hay una canción reproduciéndose, pausarla y cambiar su ícono
+                if (currentAudio && currentButton && currentButton !== button) {
+                    currentAudio.pause();
+                    currentButton.dataset.playing = 'false';
+                    currentButton.querySelector('img').src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images';
+                }
+
+                // Si la canción ya está reproduciéndose, pausarla
+                if (isPlaying) {
+                    currentAudio.pause();
+                    button.dataset.playing = 'false';
+                    button.querySelector('img').src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ftransparent-play-button-icon%2Ftransparent-play-button-icon-16.jpg&f=1&nofb=1&ipt=894deb3bbbc6d6f4f9da4af6af5916fa4a8e33b9ca186e102cacbb729e3bc09f&ipo=images';
+                } else {
+                    // Reproducir la nueva canción
+                    currentAudio = new Audio(previewUrl);
+                    currentAudio.play();
+                    button.dataset.playing = 'true';
+                    button.querySelector('img').src = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpluspng.com%2Fimg-png%2Fpause-button-png-pause-button-transparent-google-search-512.png&f=1&nofb=1&ipt=c5cf81a01fd8bf61eb172a50cffe91440bf1fad1dbe2fdb54e2e4d1040dead91&ipo=images';
+                    currentButton = button;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

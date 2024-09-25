@@ -1,0 +1,72 @@
+/* Estilos generales */
+body {
+    background-color: #191414; /* Gris oscuro */
+    color: #fff; /* Blanco */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #181818; /* Gris muy oscuro */
+    padding: 20px;
+    text-align: center;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  section {
+    margin-bottom: 30px;
+  }
+  
+  /* Estilos de botones */
+  .spotify-button {
+    background-color: #1DB954; /* Verde Spotify */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .spotify-button:hover {
+    background-color: #1ED760; /* Verde más claro */
+  }
+  
+  /* Estilos para listas */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para el footer */
+  footer {
+    background-color: #181818; /* Gris muy oscuro */
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Estilos para login.html */
+  .login {
+    text-align: center;
+  }
+  
+  /* Estilos para recomendaciones.html */
+  .recomendaciones {
+    text-align: center;
+  }
+  
+  /* Estilos para guardadas.html */
+  .guardadas {
+    text-align: center;
+  }

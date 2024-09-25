@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión con Spotify</title>
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #191414; /* Gris oscuro */
+            color: #fff; /* Blanco */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Cuadro centrado */
+        .container {
+            background-color: #181818; /* Gris muy oscuro */
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        main h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Botón de Spotify */
+        .spotify-button {
+            background-color: #1DB954; /* Verde Spotify */
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: -5px;
+        }
+
+        .spotify-button:hover {
+            background-color: #1ED760; /* Verde más claro */
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+
+        /* Botón "Atrás" */
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      <main>
+        <header>
+            <h1>Recomendador De Canciones</h1>
+        </header>
+            <section class="login">
+                <h2>Inicia sesión con Spotify</h2>
+                <a href="{{ auth_url }}" class="spotify-button">Iniciar sesión</a>
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 Zeoz</p>
+        </footer>
+    </div>
+</body>
+</html>

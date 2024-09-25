@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones de canciones para Spotify</title>
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #191414; /* Gris oscuro */
+            color: #fff; /* Blanco */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Cuadro centrado */
+        .container {
+            background-color: #181818; /* Gris muy oscuro */
+            padding: 40px;
+            border-radius: 50px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        /* Secciones estilizadas */
+        section {
+            margin-bottom: 30px;
+        }
+
+        section h2 {
+            font-size: 20px;
+        }
+
+        /* Estilo del formulario */
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            width: 80%;
+            max-width: 400px;
+            margin-right: 10px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #1DB954; /* Verde Spotify */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1ED760; /* Verde más claro */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            background-color: #222;
+            padding: 10px;
+            border-radius: 50px;
+        }
+
+        footer {
+            margin-top: -10px;
+        }
+
+        /* Botón "Atrás" */
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Recomendaciones de canciones para Spotify</h1>
+        </header>
+        <main>
+            <section class="recomendaciones">
+                <h2>Recomendaciones</h2>
+                <form method="POST" action="/recomendaciones">
+                    <input type="text" name="spotify_link" placeholder="Pega el enlace de Spotify">
+                    <p></p>
+                    <button type="submit">Obtener recomendaciones</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 Zeoz</p>
+        </footer>
+    </div>
+</body>
+</html>
