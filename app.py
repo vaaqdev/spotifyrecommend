@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Credenciales de la aplicación de Spotify
 client_id = "84a3895b12b5431da7c325c75d7cebbe"
 client_secret = "09be01d08b7c4952bf539ff356f7d48f"
-redirect_uri = "http://127.0.0.1:5000/callback" 
+redirect_uri = "http://0.0.0.0:8080/callback" 
 
 # Configura la autorización de Spotify
 scopes = "user-read-private user-read-email playlist-read-private playlist-modify-public user-library-modify"
@@ -85,4 +85,4 @@ def like_track():
 app.secret_key = "your_secret_key"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
