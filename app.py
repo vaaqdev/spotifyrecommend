@@ -82,7 +82,7 @@ def like_track():
         return "Debes iniciar sesión"
 
 # Configura la aplicación para que use sesiones
-app.secret_key = "your_secret_key"
+app.secret_key = "secr3t_kRE5KTYM2MedOGdo"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=8080, debug=False)
+    app.run(host='0.0.0.0',port=8080, debug=True)
